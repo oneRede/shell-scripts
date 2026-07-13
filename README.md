@@ -10,6 +10,8 @@ sh/
 ├── lithium/        # 碳酸锂价格监控
 ├── us-treasury/    # 美国30年期国债收益率监控
 ├── usdjpy/         # USD/JPY汇率监控
+├── oil/            # 原油价格监控
+├── natural-gas/    # 天然气价格监控
 └── monitor_ip/     # IP监控脚本
 ```
 
@@ -113,9 +115,59 @@ tail -f ~/git/sh/usdjpy/logs/usdjpy_$(date +%Y%m%d).log
 
 **当前汇率：** ¥162.09
 
+### 5. 原油价格监控 (`oil/`)
+
+每小时自动获取WTI原油价格。
+
+**功能特点：**
+- ✅ WTI原油价格监控
+- ✅ 数据源：TradingEconomics（免费API）
+- ✅ 开机自启动支持
+- ✅ 日志记录
+- ✅ 每小时整点采集
+
+**使用方法：**
+```bash
+# 安装开机自启动
+~/git/sh/oil/install_autostart.sh
+
+# 手动运行
+~/git/sh/oil/get_oil_price.sh
+
+# 查看日志
+tail -f ~/git/sh/oil/logs/oil_price_$(date +%Y%m%d).log
+```
+
+**当前价格：** $74.43/桶
+
+### 6. 天然气价格监控 (`natural-gas/`)
+
+每小时自动获取天然气价格。
+
+**功能特点：**
+- ✅ 天然气期货价格监控
+- ✅ 数据源：TradingEconomics（免费API）
+- ✅ 开机自启动支持
+- ✅ 日志记录
+- ✅ 每小时整点采集
+
+**使用方法：**
+```bash
+# 安装开机自启动
+~/git/sh/natural-gas/install_autostart.sh
+
+# 手动运行
+~/git/sh/natural-gas/get_natural_gas.sh
+
+# 查看日志
+tail -f ~/git/sh/natural-gas/logs/natural_gas_$(date +%Y%m%d).log
+```
+
+**当前价格：** $2.90/MMBtu
+
 ## 🛠️ 系统监控
 
-### 5. IP监控 (`monitor_ip/`)
+### 7. IP监控 (`monitor_ip/`)
 
 IP地址变化监控脚本。
 
@@ -149,12 +201,18 @@ CSV格式示例：
 
 # USD/JPY汇率监控（每小时）
 ~/git/sh/usdjpy/install_autostart.sh
+
+# 原油价格监控（每小时）
+~/git/sh/oil/install_autostart.sh
+
+# 天然气价格监控（每小时）
+~/git/sh/natural-gas/install_autostart.sh
 ```
 
 ### 查看所有运行中的服务
 
 ```bash
-launchctl list | grep -E "(gold-price|lithium-price|us-treasury|usdjpy)"
+launchctl list | grep -E "(gold-price|lithium-price|us-treasury|usdjpy|oil-price|natural-gas)"
 ```
 
 ### 卸载所有监控系统
@@ -164,6 +222,8 @@ launchctl list | grep -E "(gold-price|lithium-price|us-treasury|usdjpy)"
 ~/git/sh/lithium/uninstall_autostart.sh
 ~/git/sh/us-treasury/uninstall_autostart.sh
 ~/git/sh/usdjpy/uninstall_autostart.sh
+~/git/sh/oil/uninstall_autostart.sh
+~/git/sh/natural-gas/uninstall_autostart.sh
 ```
 
 ## 💡 技术栈
