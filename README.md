@@ -8,6 +8,7 @@
 sh/
 ├── gold/           # 黄金价格监控
 ├── lithium/        # 碳酸锂价格监控
+├── us-treasury/    # 美国30年期国债收益率监控
 └── monitor_ip/     # IP监控脚本
 ```
 
@@ -61,9 +62,34 @@ tail -f ~/git/sh/lithium/logs/lithium_price_$(date +%Y%m%d).log
 
 **当前价格：** ¥155,000 /吨
 
+### 3. 美国30年期国债收益率监控 (`us-treasury/`)
+
+每4小时自动获取美国30年期国债收益率。
+
+**功能特点：**
+- ✅ 美国30年期国债收益率监控
+- ✅ 数据源：TradingEconomics（免费API）
+- ✅ 开机自启动支持
+- ✅ 双格式记录（日志 + CSV）
+- ✅ 每天6次采集（0:00, 4:00, 8:00, 12:00, 16:00, 20:00）
+
+**使用方法：**
+```bash
+# 安装开机自启动
+~/git/sh/us-treasury/install_autostart.sh
+
+# 手动运行
+~/git/sh/us-treasury/get_us_treasury.sh
+
+# 查看日志
+tail -f ~/git/sh/us-treasury/logs/us_treasury_$(date +%Y%m%d).log
+```
+
+**当前收益率：** 4.587%
+
 ## 🛠️ 系统监控
 
-### 3. IP监控 (`monitor_ip/`)
+### 4. IP监控 (`monitor_ip/`)
 
 IP地址变化监控脚本。
 
@@ -86,17 +112,20 @@ CSV格式示例：
 ### 安装所有监控系统
 
 ```bash
-# 黄金价格监控
+# 黄金价格监控（每10分钟）
 ~/git/sh/gold/install_autostart.sh
 
-# 碳酸锂价格监控
+# 碳酸锂价格监控（每10分钟）
 ~/git/sh/lithium/install_autostart.sh
+
+# 美国30年期国债收益率监控（每4小时）
+~/git/sh/us-treasury/install_autostart.sh
 ```
 
 ### 查看所有运行中的服务
 
 ```bash
-launchctl list | grep -E "(gold-price|lithium-price)"
+launchctl list | grep -E "(gold-price|lithium-price|us-treasury)"
 ```
 
 ### 卸载所有监控系统
@@ -104,6 +133,7 @@ launchctl list | grep -E "(gold-price|lithium-price)"
 ```bash
 ~/git/sh/gold/uninstall_autostart.sh
 ~/git/sh/lithium/uninstall_autostart.sh
+~/git/sh/us-treasury/uninstall_autostart.sh
 ```
 
 ## 💡 技术栈
