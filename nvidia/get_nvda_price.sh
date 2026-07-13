@@ -1,0 +1,144 @@
+#!/bin/bash
+
+# NVIDIA (NVDA) 股价获取脚本
+# 每10分钟运行一次，记录当前股价
+
+# 设置日志目录
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOG_DIR="${SCRIPT_DIR}/logs"
+LOG_FILE="${LOG_DIR}/nvda_price_$(date +%Y%m%d).log"
+
+# 创建日志目录
+mkdir -p "${LOG_DIR}"
+
+# 获取当前时间戳
+TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+
+# 方法1: 使用腾讯财经 API（推荐，可靠）
+get_price_method1() {
+    local response=$(curl -s -m 10 "http://qt.gtimg.cn/q=usNVDA" | iconv -f gbk -t utf-8 2>/dev/null)
+    if [ $? -eq 0 ] && [ -n "$response" ] && [[ "$response" == *"~"* ]]; then
+        echo "$response" | python3 -c "
+import sys
+try:
+    data = sys.stdin.read().strip()
+    if '~' in data:
+        # 腾讯财经数据格式: v_usNVDA=\"字段0~字段1~...\"
+        parts = data.split('~')
+        if len(parts) > 35:
+            # 字段说明 (根据实际测试):
+            # 3: 最新价 (210.96)
+            # 4: 昨收价 (202.78)
+            # 5: 今开 (202.00)
+            # 33: 最高 (211.00)
+            # 34: 最低 (201.92)
+            # 6: 成交量 (148421001)
+            price = float(parts[3]) if parts[3] else 0
+            prev_close = float(parts[4]) if parts[4] else 0
+            open_price = float(parts[5]) if parts[5] else 0
+            volume = int(float(parts[6])) if parts[6] else 0
+            high = float(parts[33]) if len(parts) > 33 and parts[33] else price
+            low = float(parts[34]) if len(parts) > 34 and parts[34] else price
+
+            if price > 0:
+                print(f'{price:.2f}|{open_price:.2f}|{high:.2f}|{low:.2f}|{volume}|{prev_close:.2f}')
+            else:
+                print('')
+        else:
+            print('')
+    else:
+        print('')
+except:
+    print('')
+" 2>/dev/null
+    fi
+}
+
+# 方法2: 使用新浪财经（备用）
+get_price_method2() {
+    local response=$(curl -s -m 10 "https://hq.sinajs.cn/list=gb_nvda" | iconv -f gbk -t utf-8 2>/dev/null)
+    if [ $? -eq 0 ] && [ -n "$response" ] && [[ "$response" == *","* ]]; then
+        echo "$response" | python3 -c "
+import sys
+try:
+    data = sys.stdin.read().strip()
+    if '=\"' in data and ',' in data:
+        content = data.split('=\"')[1].rstrip('\";')
+        parts = content.split(',')
+        if len(parts) > 10 and parts[1]:
+            price = float(parts[1])
+            open_price = float(parts[5]) if parts[5] else 0
+            high = float(parts[6]) if parts[6] else 0
+            low = float(parts[7]) if parts[7] else 0
+            prev_close = float(parts[26]) if len(parts) > 26 and parts[26] else 0
+            volume = int(float(parts[10])) if parts[10] else 0
+
+            if price > 0:
+                print(f'{price:.2f}|{open_price:.2f}|{high:.2f}|{low:.2f}|{volume}|{prev_close:.2f}')
+            else:
+                print('')
+        else:
+            print('')
+    else:
+        print('')
+except:
+    print('')
+" 2>/dev/null
+    fi
+}
+
+# 尝试获取价格
+PRICE_DATA=""
+METHOD="未知"
+
+# 先尝试方法1（腾讯财经）
+PRICE_DATA=$(get_price_method1)
+if [ -n "$PRICE_DATA" ] && [[ "$PRICE_DATA" =~ \| ]]; then
+    METHOD="腾讯财经"
+else
+    PRICE_DATA=""
+fi
+
+# 如果方法1失败，尝试方法2（新浪财经）
+if [ -z "$PRICE_DATA" ]; then
+    PRICE_DATA=$(get_price_method2)
+    if [ -n "$PRICE_DATA" ] && [[ "$PRICE_DATA" =~ \| ]]; then
+        METHOD="新浪财经"
+    else
+        PRICE_DATA=""
+    fi
+fi
+
+# 检查是否成功获取价格
+if [ -z "$PRICE_DATA" ]; then
+    echo "${TIMESTAMP} - ERROR: 无法获取 NVDA 股价（所有数据源均失败）" | tee -a "${LOG_FILE}"
+    echo "${TIMESTAMP} - INFO: 请检查网络连接或数据源是否可用" | tee -a "${LOG_FILE}"
+    echo "${TIMESTAMP} - INFO: 可访问 http://quote.eastmoney.com/us/NVDA.html 查看实时价格" | tee -a "${LOG_FILE}"
+    exit 1
+fi
+
+# 解析数据
+IFS='|' read -r PRICE OPEN HIGH LOW VOLUME PREV_CLOSE <<< "$PRICE_DATA"
+
+# 计算涨跌
+if (( $(echo "$PREV_CLOSE > 0" | bc -l) )); then
+    CHANGE=$(echo "$PRICE - $PREV_CLOSE" | bc -l)
+    CHANGE_PCT=$(echo "scale=2; ($CHANGE / $PREV_CLOSE) * 100" | bc -l)
+    CHANGE_STR=$(printf "%+.2f (%+.2f%%)" $CHANGE $CHANGE_PCT)
+else
+    CHANGE=0
+    CHANGE_PCT=0
+    CHANGE_STR="N/A"
+fi
+
+# 记录价格
+echo "${TIMESTAMP} - NVDA 股价: \$${PRICE} ${CHANGE_STR} | 开:\$${OPEN} 高:\$${HIGH} 低:\$${LOW} 量:${VOLUME} [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
+
+# 同时保存到CSV格式的文件，便于后续分析
+CSV_FILE="${LOG_DIR}/nvda_price.csv"
+if [ ! -f "${CSV_FILE}" ]; then
+    echo "时间戳,价格(USD),开盘价,最高价,最低价,成交量,涨跌额,涨跌幅(%),数据源" > "${CSV_FILE}"
+fi
+echo "${TIMESTAMP},${PRICE},${OPEN},${HIGH},${LOW},${VOLUME},${CHANGE},${CHANGE_PCT},${METHOD}" >> "${CSV_FILE}"
+
+exit 0

@@ -12,6 +12,8 @@ sh/
 ├── usdjpy/         # USD/JPY汇率监控
 ├── oil/            # 原油价格监控
 ├── natural-gas/    # 天然气价格监控
+├── spcx/           # SpaceX (SPCX) 股价监控 ⭐ 新增
+├── nvidia/         # NVIDIA (NVDA) 股价监控 ⭐ 新增
 └── monitor_ip/     # IP监控脚本
 ```
 
@@ -281,3 +283,62 @@ MIT License
 ---
 
 **最后更新：** 2026-07-13
+
+### 7. SpaceX 股价监控 (`spcx/`)
+
+每10分钟自动获取 SpaceX (SPCX) 股价。
+
+**功能特点：**
+- ✅ SpaceX 股价实时监控
+- ✅ 数据源：腾讯财经 API（主要）+ 新浪财经（备用）
+- ✅ 开机自启动支持
+- ✅ 双格式记录（日志 + CSV）
+- ✅ 自动计算涨跌幅
+- ⚠️ 数据换算：直接使用（无需除以1000）
+
+**使用方法：**
+```bash
+# 安装开机自启动
+~/git/sh/spcx/install_autostart.sh
+
+# 手动运行
+~/git/sh/spcx/get_spcx_price.sh
+
+# 手动录入（API 限制时）
+~/git/sh/spcx/manual_input.sh
+
+# 查看日志
+tail -f ~/git/sh/spcx/logs/spcx_price_$(date +%Y%m%d).log
+```
+
+**当前价格：** $145.30 (-4.51%)
+
+### 8. NVIDIA 股价监控 (`nvidia/`)
+
+每10分钟自动获取 NVIDIA (NVDA) 股价。
+
+**功能特点：**
+- ✅ NVIDIA 股价实时监控
+- ✅ 数据源：腾讯财经 API（主要）+ 新浪财经（备用）
+- ✅ 开机自启动支持
+- ✅ 双格式记录（日志 + CSV）
+- ✅ 自动计算涨跌幅
+- ⚠️ 数据换算：直接使用（无需除以1000）
+
+**使用方法：**
+```bash
+# 安装开机自启动
+~/git/sh/nvidia/install_autostart.sh
+
+# 手动运行
+~/git/sh/nvidia/get_nvda_price.sh
+
+# 手动录入（API 限制时）
+~/git/sh/nvidia/manual_input.sh
+
+# 查看日志
+tail -f ~/git/sh/nvidia/logs/nvda_price_$(date +%Y%m%d).log
+```
+
+**当前价格：** $210.96 (+4.03%)
+
