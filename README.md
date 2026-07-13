@@ -9,6 +9,7 @@ sh/
 ├── gold/           # 黄金价格监控
 ├── lithium/        # 碳酸锂价格监控
 ├── us-treasury/    # 美国30年期国债收益率监控
+├── usdjpy/         # USD/JPY汇率监控
 └── monitor_ip/     # IP监控脚本
 ```
 
@@ -87,9 +88,34 @@ tail -f ~/git/sh/us-treasury/logs/us_treasury_$(date +%Y%m%d).log
 
 **当前收益率：** 4.587%
 
+### 4. USD/JPY汇率监控 (`usdjpy/`)
+
+每小时自动获取美元兑日元汇率。
+
+**功能特点：**
+- ✅ USD/JPY实时汇率监控
+- ✅ 多数据源备份（fxratesapi、TradingEconomics、Yahoo Finance）
+- ✅ 开机自启动支持
+- ✅ 双格式记录（日志 + CSV）
+- ✅ 每小时整点采集
+
+**使用方法：**
+```bash
+# 安装开机自启动
+~/git/sh/usdjpy/install_autostart.sh
+
+# 手动运行
+~/git/sh/usdjpy/get_usdjpy.sh
+
+# 查看日志
+tail -f ~/git/sh/usdjpy/logs/usdjpy_$(date +%Y%m%d).log
+```
+
+**当前汇率：** ¥162.09
+
 ## 🛠️ 系统监控
 
-### 4. IP监控 (`monitor_ip/`)
+### 5. IP监控 (`monitor_ip/`)
 
 IP地址变化监控脚本。
 
@@ -120,12 +146,15 @@ CSV格式示例：
 
 # 美国30年期国债收益率监控（每4小时）
 ~/git/sh/us-treasury/install_autostart.sh
+
+# USD/JPY汇率监控（每小时）
+~/git/sh/usdjpy/install_autostart.sh
 ```
 
 ### 查看所有运行中的服务
 
 ```bash
-launchctl list | grep -E "(gold-price|lithium-price|us-treasury)"
+launchctl list | grep -E "(gold-price|lithium-price|us-treasury|usdjpy)"
 ```
 
 ### 卸载所有监控系统
@@ -134,6 +163,7 @@ launchctl list | grep -E "(gold-price|lithium-price|us-treasury)"
 ~/git/sh/gold/uninstall_autostart.sh
 ~/git/sh/lithium/uninstall_autostart.sh
 ~/git/sh/us-treasury/uninstall_autostart.sh
+~/git/sh/usdjpy/uninstall_autostart.sh
 ```
 
 ## 💡 技术栈
