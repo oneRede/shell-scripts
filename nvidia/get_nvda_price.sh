@@ -139,9 +139,14 @@ fi
 PE_INFO=""
 if (( $(echo "$PE_STATIC > 0" | bc -l) )); then
     PE_INFO=" | 静态P/E:${PE_STATIC}"
+elif (( $(echo "$PE_STATIC < 0" | bc -l) )); then
+    PE_INFO=" | 静态P/E:N/A(亏损)"
 fi
+
 if (( $(echo "$PE_TTM > 0" | bc -l) )); then
     PE_INFO="${PE_INFO} 动态P/E:${PE_TTM}"
+elif (( $(echo "$PE_TTM < 0" | bc -l) )); then
+    PE_INFO="${PE_INFO} 动态P/E:N/A(亏损)"
 fi
 
 echo "${TIMESTAMP} - NVDA 股价: \$${PRICE} ${CHANGE_STR} | 开:\$${OPEN} 高:\$${HIGH} 低:\$${LOW} 量:${VOLUME}${PE_INFO} [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
