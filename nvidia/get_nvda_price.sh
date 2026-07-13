@@ -30,18 +30,22 @@ try:
             # 3: 最新价 (210.96)
             # 4: 昨收价 (202.78)
             # 5: 今开 (202.00)
+            # 6: 成交量 (148421001)
             # 33: 最高 (211.00)
             # 34: 最低 (201.92)
-            # 6: 成交量 (148421001)
+            # 39: 动态市盈率 TTM (32.31)
+            # 51: 静态市盈率 (26.14)
             price = float(parts[3]) if parts[3] else 0
             prev_close = float(parts[4]) if parts[4] else 0
             open_price = float(parts[5]) if parts[5] else 0
             volume = int(float(parts[6])) if parts[6] else 0
             high = float(parts[33]) if len(parts) > 33 and parts[33] else price
             low = float(parts[34]) if len(parts) > 34 and parts[34] else price
+            pe_ttm = float(parts[39]) if len(parts) > 39 and parts[39] and parts[39] != '0' else 0
+            pe_static = float(parts[51]) if len(parts) > 51 and parts[51] and parts[51] != '0' else 0
 
             if price > 0:
-                print(f'{price:.2f}|{open_price:.2f}|{high:.2f}|{low:.2f}|{volume}|{prev_close:.2f}')
+                print(f'{price:.2f}|{open_price:.2f}|{high:.2f}|{low:.2f}|{volume}|{prev_close:.2f}|{pe_ttm:.2f}|{pe_static:.2f}')
             else:
                 print('')
         else:
@@ -118,7 +122,7 @@ if [ -z "$PRICE_DATA" ]; then
 fi
 
 # 解析数据
-IFS='|' read -r PRICE OPEN HIGH LOW VOLUME PREV_CLOSE <<< "$PRICE_DATA"
+IFS='|' read -r PRICE OPEN HIGH LOW VOLUME PREV_CLOSE PE_TTM PE_STATIC <<< "$PRICE_DATA"
 
 # 计算涨跌
 if (( $(echo "$PREV_CLOSE > 0" | bc -l) )); then
@@ -132,13 +136,21 @@ else
 fi
 
 # 记录价格
-echo "${TIMESTAMP} - NVDA 股价: \$${PRICE} ${CHANGE_STR} | 开:\$${OPEN} 高:\$${HIGH} 低:\$${LOW} 量:${VOLUME} [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
+PE_INFO=""
+if (( $(echo "$PE_STATIC > 0" | bc -l) )); then
+    PE_INFO=" | 静态P/E:${PE_STATIC}"
+fi
+if (( $(echo "$PE_TTM > 0" | bc -l) )); then
+    PE_INFO="${PE_INFO} 动态P/E:${PE_TTM}"
+fi
+
+echo "${TIMESTAMP} - NVDA 股价: \$${PRICE} ${CHANGE_STR} | 开:\$${OPEN} 高:\$${HIGH} 低:\$${LOW} 量:${VOLUME}${PE_INFO} [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
 
 # 同时保存到CSV格式的文件，便于后续分析
 CSV_FILE="${LOG_DIR}/nvda_price.csv"
 if [ ! -f "${CSV_FILE}" ]; then
-    echo "时间戳,价格(USD),开盘价,最高价,最低价,成交量,涨跌额,涨跌幅(%),数据源" > "${CSV_FILE}"
+    echo "时间戳,价格(USD),开盘价,最高价,最低价,成交量,涨跌额,涨跌幅(%),静态市盈率,动态市盈率,数据源" > "${CSV_FILE}"
 fi
-echo "${TIMESTAMP},${PRICE},${OPEN},${HIGH},${LOW},${VOLUME},${CHANGE},${CHANGE_PCT},${METHOD}" >> "${CSV_FILE}"
+echo "${TIMESTAMP},${PRICE},${OPEN},${HIGH},${LOW},${VOLUME},${CHANGE},${CHANGE_PCT},${PE_STATIC},${PE_TTM},${METHOD}" >> "${CSV_FILE}"
 
 exit 0
