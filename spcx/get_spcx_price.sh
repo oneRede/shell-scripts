@@ -146,16 +146,19 @@ fi
 
 # 记录价格
 PE_INFO=""
-if (( $(echo "$PE_STATIC > 0" | bc -l) )); then
-    PE_INFO=" | 静态P/E:${PE_STATIC}"
-elif (( $(echo "$PE_STATIC < 0" | bc -l) )); then
-    PE_INFO=" | 静态P/E:N/A(亏损)"
-fi
 
-if (( $(echo "$PE_TTM > 0" | bc -l) )); then
-    PE_INFO="${PE_INFO} 动态P/E:${PE_TTM}"
-elif (( $(echo "$PE_TTM < 0" | bc -l) )); then
-    PE_INFO="${PE_INFO} 动态P/E:N/A(亏损)"
+# 对于亏损公司（动态P/E为负），静态P/E也应该异常或不可信
+if (( $(echo "$PE_TTM < 0" | bc -l) )); then
+    # 如果过去12个月亏损，忽略可能有误的静态P/E
+    PE_INFO=" | 动态P/E:N/A(亏损)"
+else
+    # 盈利公司，正常显示两个市盈率
+    if (( $(echo "$PE_STATIC > 0" | bc -l) )); then
+        PE_INFO=" | 静态P/E:${PE_STATIC}"
+    fi
+    if (( $(echo "$PE_TTM > 0" | bc -l) )); then
+        PE_INFO="${PE_INFO} 动态P/E:${PE_TTM}"
+    fi
 fi
 
 echo "${TIMESTAMP} - SPCX.O 股价: \$${PRICE} ${CHANGE_STR} | 开:\$${OPEN} 高:\$${HIGH} 低:\$${LOW} 量:${VOLUME}${PE_INFO} [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
