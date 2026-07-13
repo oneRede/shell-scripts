@@ -102,17 +102,11 @@ fi
 
 # 记录价格
 PE_INFO=""
-# 对于亏损公司（动态P/E为负），只显示亏损状态
-if (( $(echo "$PE_TTM < 0" | bc -l) )); then
+# 只显示动态市盈率（TTM P/E）
+if (( $(echo "$PE_TTM > 0" | bc -l) )); then
+    PE_INFO=" | 动态P/E:${PE_TTM}"
+elif (( $(echo "$PE_TTM < 0" | bc -l) )); then
     PE_INFO=" | 动态P/E:N/A(亏损)"
-else
-    # 盈利公司，正常显示两个市盈率
-    if (( $(echo "$PE_STATIC > 0" | bc -l) )); then
-        PE_INFO=" | 静态P/E:${PE_STATIC}"
-    fi
-    if (( $(echo "$PE_TTM > 0" | bc -l) )); then
-        PE_INFO="${PE_INFO} 动态P/E:${PE_TTM}"
-    fi
 fi
 
 echo "${TIMESTAMP} - AAPL 股价: \$${PRICE} ${CHANGE_STR} | 开:\$${OPEN} 高:\$${HIGH} 低:\$${LOW} 量:${VOLUME}${PE_INFO} [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
@@ -120,8 +114,8 @@ echo "${TIMESTAMP} - AAPL 股价: \$${PRICE} ${CHANGE_STR} | 开:\$${OPEN} 高:\
 # 同时保存到CSV格式的文件，便于后续分析
 CSV_FILE="${LOG_DIR}/aapl_price.csv"
 if [ ! -f "${CSV_FILE}" ]; then
-    echo "时间戳,价格(USD),开盘价,最高价,最低价,成交量,涨跌额,涨跌幅(%),静态市盈率,动态市盈率,数据源" > "${CSV_FILE}"
+    echo "时间戳,价格(USD),开盘价,最高价,最低价,成交量,涨跌额,涨跌幅(%),动态市盈率,数据源" > "${CSV_FILE}"
 fi
-echo "${TIMESTAMP},${PRICE},${OPEN},${HIGH},${LOW},${VOLUME},${CHANGE},${CHANGE_PCT},${PE_STATIC},${PE_TTM},${METHOD}" >> "${CSV_FILE}"
+echo "${TIMESTAMP},${PRICE},${OPEN},${HIGH},${LOW},${VOLUME},${CHANGE},${CHANGE_PCT},${PE_TTM},${METHOD}" >> "${CSV_FILE}"
 
 exit 0
