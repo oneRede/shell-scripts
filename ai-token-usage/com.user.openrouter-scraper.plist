@@ -23,9 +23,6 @@
     <key>RunAtLoad</key>
     <true/>
 
-    <key>StartInterval</key>
-    <integer>300</integer>
-
     <key>StandardOutPath</key>
     <string>/Users/rede/git/sh/ai-token-usage/logs/openrouter_launchd_output.log</string>
 
@@ -37,9 +34,5 @@
         <key>PATH</key>
         <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin</string>
     </dict>
-
-    <!-- 确保只运行一次（不要重复触发） -->
-    <key>ThrottleInterval</key>
-    <integer>3600</integer>
 </dict>
 </plist>
