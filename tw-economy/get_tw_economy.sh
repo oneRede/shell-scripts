@@ -17,7 +17,7 @@ MAIN_CSV="${DATA_DIR}/tw_economy_data.csv"
 # 初始化CSV
 init_csv() {
     if [ ! -f "${MAIN_CSV}" ]; then
-        echo "记录日期,GDP增长率(%),GDP数据期间,出口额(亿美元),出口数据月份,进口额(亿美元),进口数据月份,贸易顺差(亿美元)" > "${MAIN_CSV}"
+        echo "记录日期,GDP增长率(%),出口额(亿美元),进口额(亿美元),贸易顺差(亿美元)" > "${MAIN_CSV}"
         echo "${TIMESTAMP} - 初始化数据文件: ${MAIN_CSV}" | tee -a "${LOG_FILE}"
     fi
 }
@@ -151,8 +151,8 @@ if [ -n "$exports_value" ] && [ -n "$imports_value" ]; then
     echo "${TIMESTAMP} - 贸易顺差: ${trade_surplus}亿美元" | tee -a "${LOG_FILE}"
 fi
 
-# 追加数据到CSV
-echo "${RECORD_DATE},${gdp_value},${gdp_period},${exports_value},${exports_period},${imports_value},${imports_period},${trade_surplus}" >> "${MAIN_CSV}"
+# 追加数据到CSV（只保留数值，不记录期间）
+echo "${RECORD_DATE},${gdp_value},${exports_value},${imports_value},${trade_surplus}" >> "${MAIN_CSV}"
 
 echo "${TIMESTAMP} - 数据已记录到: ${MAIN_CSV}" | tee -a "${LOG_FILE}"
 echo "${TIMESTAMP} - ========== 数据收集完成 ==========" | tee -a "${LOG_FILE}"
