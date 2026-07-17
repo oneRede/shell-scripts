@@ -176,6 +176,7 @@ def save_results(data):
     # 计算总token和月度估算
     total_tokens = sum(r['tokens'] for r in rankings)
     monthly_estimate = total_tokens * 30
+    monthly_estimate_t = round(monthly_estimate / 1_000_000_000_000, 2)
 
     # 保存原始JSON（包含月度估算）
     json_file = OPENROUTER_DIR / f"rankings_{date_suffix}.json"
@@ -188,8 +189,9 @@ def save_results(data):
             'note': f'数据代表{date_display}的Token消耗',
             'statistics': {
                 'total_tokens_per_day': total_tokens,
-                'monthly_estimate': monthly_estimate,
-                'monthly_estimate_trillion': round(monthly_estimate / 1_000_000_000_000, 2),
+                'monthly_estimate_tokens': monthly_estimate,
+                'monthly_estimate_t': monthly_estimate_t,
+                'monthly_estimate_unit': 'T tokens',
                 'model_count': len(rankings)
             },
             'rankings': rankings

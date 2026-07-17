@@ -1,13 +1,14 @@
 {
-  "crawl_time": "2026-07-17 17:29:45",
+  "crawl_time": "2026-07-17 17:31:34",
   "target_date": "2026-07-16",
   "source": "OpenRouter Rankings (Day View)",
   "url": "https://openrouter.ai/rankings?view=day",
   "note": "数据代表2026年07月16日的Token消耗",
   "statistics": {
     "total_tokens_per_day": 2914000000000,
-    "monthly_estimate": 87420000000000,
-    "monthly_estimate_trillion": 87.42,
+    "monthly_estimate_tokens": 87420000000000,
+    "monthly_estimate_t": 87.42,
+    "monthly_estimate_unit": "T tokens",
     "model_count": 7
   },
   "rankings": [
