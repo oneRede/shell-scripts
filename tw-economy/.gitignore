@@ -1,0 +1,12 @@
+# 忽略数据和日志文件
+data/
+logs/
+*.log
+
+# 忽略缓存文件
+.gdp_cache
+.exports_cache
+.imports_cache
+
+# 忽略 macOS 系统文件
+.DS_Store
