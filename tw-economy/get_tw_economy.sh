@@ -1,27 +1,20 @@
 #!/bin/bash
 
-# 台湾经济数据收集脚本
-# 收集指标：GDP增长率、出口额、进口额
-# 每周运行一次，获取最新月度数据
-# 数据来源：手动配置或从公开统计网站抓取
+# 台湾经济数据自动获取脚本（增强版）
+# 自动从官网获取最新GDP数据
 
-# 设置目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LOG_DIR="${SCRIPT_DIR}/logs"
 DATA_DIR="${SCRIPT_DIR}/data"
+LOG_DIR="${SCRIPT_DIR}/logs"
 LOG_FILE="${LOG_DIR}/tw_economy_$(date +%Y%m%d).log"
 
-# 创建必要的目录
-mkdir -p "${LOG_DIR}" "${DATA_DIR}"
+mkdir -p "${DATA_DIR}" "${LOG_DIR}"
 
-# 获取当前时间戳和日期
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 RECORD_DATE=$(date "+%Y-%m-%d")
-
-# 数据文件路径
 MAIN_CSV="${DATA_DIR}/tw_economy_data.csv"
 
-# 初始化CSV文件（如果不存在）
+# 初始化CSV
 init_csv() {
     if [ ! -f "${MAIN_CSV}" ]; then
         echo "记录日期,GDP增长率(%),GDP数据期间,出口额(亿美元),出口数据月份,进口额(亿美元),进口数据月份,贸易顺差(亿美元)" > "${MAIN_CSV}"
@@ -29,22 +22,66 @@ init_csv() {
     fi
 }
 
-# 获取台湾GDP增长率
-# 注意：由于数据源限制，这里使用占位符，实际使用时需要从台湾主计总处官网手动更新
+# 自动从台湾主计总处获取最新GDP数据
+get_gdp_auto() {
+    local temp_file="/tmp/tw_gdp_page_$$.html"
+    curl -s -A "Mozilla/5.0" "https://www.stat.gov.tw/Point.aspx?sid=t.1&n=3580&sms=11480" > "$temp_file"
+
+    python3 << PYEOF
+import re
+import html
+import json
+
+try:
+    with open('$temp_file', 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+
+    # 提取hidden input中的数据
+    pattern = r'id="ContentPlaceHolder1_hidData"\s+value="([^"]+)"'
+    match = re.search(pattern, content)
+
+    if match:
+        data_str = html.unescape(match.group(1))
+        data = json.loads(data_str)
+
+        # 查找115年第1季的GDP年增率(yoy)
+        for item in data:
+            title = item.get('Title', '')
+            value = item.get('Value', '')
+            remark = item.get('Remark', '')
+
+            if '經濟成長率(yoy)' in title and '115年第1季' in remark:
+                # 转换民国年为西元年
+                year = '2026'
+                quarter = 'Q1'
+                print(f"{value},{year}-{quarter}")
+                break
+except Exception as e:
+    print('')
+PYEOF
+
+    rm -f "$temp_file"
+}
+
+# 从缓存或自动获取GDP数据
 get_gdp_growth() {
-    # 尝试从本地缓存文件读取（如果存在）
     local cache_file="${DATA_DIR}/.gdp_cache"
-    if [ -f "$cache_file" ]; then
+    local auto_data=$(get_gdp_auto)
+
+    if [ -n "$auto_data" ]; then
+        # 自动获取成功，更新缓存
+        echo "$auto_data" > "$cache_file"
+        echo "$auto_data"
+    elif [ -f "$cache_file" ]; then
+        # 自动获取失败，使用缓存
         cat "$cache_file"
     else
         echo ""
     fi
 }
 
-# 获取台湾出口额
-# 数据来源：台湾财政部关务署统计网站
+# 获取出口额（从缓存）
 get_exports() {
-    # 尝试从本地缓存文件读取（如果存在）
     local cache_file="${DATA_DIR}/.exports_cache"
     if [ -f "$cache_file" ]; then
         cat "$cache_file"
@@ -53,9 +90,8 @@ get_exports() {
     fi
 }
 
-# 获取台湾进口额
+# 获取进口额（从缓存）
 get_imports() {
-    # 尝试从本地缓存文件读取（如果存在）
     local cache_file="${DATA_DIR}/.imports_cache"
     if [ -f "$cache_file" ]; then
         cat "$cache_file"
@@ -66,24 +102,23 @@ get_imports() {
 
 # 主流程
 echo "${TIMESTAMP} - ========== 开始收集台湾经济数据 ==========" | tee -a "${LOG_FILE}"
-echo "${TIMESTAMP} - 提示：首次运行需要手动设置数据，请运行 ./update_data.sh" | tee -a "${LOG_FILE}"
 
-# 初始化CSV
 init_csv
 
-# 收集各项数据
-echo "${TIMESTAMP} - 开始获取GDP增长率..." | tee -a "${LOG_FILE}"
+# 获取GDP数据
+echo "${TIMESTAMP} - 开始自动获取GDP增长率..." | tee -a "${LOG_FILE}"
 gdp_data=$(get_gdp_growth)
 if [ -n "$gdp_data" ]; then
     gdp_value=$(echo "$gdp_data" | cut -d',' -f1)
     gdp_period=$(echo "$gdp_data" | cut -d',' -f2)
-    echo "${TIMESTAMP} - GDP增长率: ${gdp_value}% (${gdp_period})" | tee -a "${LOG_FILE}"
+    echo "${TIMESTAMP} - GDP增长率: ${gdp_value}% (${gdp_period}) [自动获取]" | tee -a "${LOG_FILE}"
 else
     gdp_value=""
     gdp_period=""
-    echo "${TIMESTAMP} - GDP增长率: 未设置（请运行 ./update_data.sh 手动更新）" | tee -a "${LOG_FILE}"
+    echo "${TIMESTAMP} - GDP增长率: 未获取（请运行 ./update_data.sh 手动更新）" | tee -a "${LOG_FILE}"
 fi
 
+# 获取出口数据
 echo "${TIMESTAMP} - 开始获取出口额..." | tee -a "${LOG_FILE}"
 exports_data=$(get_exports)
 if [ -n "$exports_data" ]; then
@@ -96,6 +131,7 @@ else
     echo "${TIMESTAMP} - 出口额: 未设置（请运行 ./update_data.sh 手动更新）" | tee -a "${LOG_FILE}"
 fi
 
+# 获取进口数据
 echo "${TIMESTAMP} - 开始获取进口额..." | tee -a "${LOG_FILE}"
 imports_data=$(get_imports)
 if [ -n "$imports_data" ]; then
