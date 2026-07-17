@@ -96,6 +96,8 @@ def parse_html_content(html):
                 rankings.append({
                     'model': model,
                     'tokens': tokens,
+                    'tokens_t': round(tokens / 1_000_000_000_000, 3),
+                    'tokens_unit': 'T',
                     'rank': len(rankings) + 1
                 })
 
@@ -341,6 +343,8 @@ def parse_html_content(html):
                 rankings.append({
                     'model': model,
                     'tokens': tokens,
+                    'tokens_t': round(tokens / 1_000_000_000_000, 3),
+                    'tokens_unit': 'T',
                     'rank': len(rankings) + 1
                 })
 

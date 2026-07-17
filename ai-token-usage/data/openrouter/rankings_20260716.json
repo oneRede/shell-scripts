@@ -1,5 +1,5 @@
 {
-  "crawl_time": "2026-07-17 17:31:34",
+  "crawl_time": "2026-07-17 19:23:39",
   "target_date": "2026-07-16",
   "source": "OpenRouter Rankings (Day View)",
   "url": "https://openrouter.ai/rankings?view=day",
@@ -15,36 +15,50 @@
     {
       "model": "GLM 5.2",
       "tokens": 624000000000,
+      "tokens_t": 0.624,
+      "tokens_unit": "T",
       "rank": 1
     },
     {
       "model": "MiniMax M3",
       "tokens": 564000000000,
+      "tokens_t": 0.564,
+      "tokens_unit": "T",
       "rank": 2
     },
     {
       "model": "Nemotron 3 Ultra (free)",
       "tokens": 441000000000,
+      "tokens_t": 0.441,
+      "tokens_unit": "T",
       "rank": 3
     },
     {
       "model": "DeepSeek V4 Pro",
       "tokens": 392000000000,
+      "tokens_t": 0.392,
+      "tokens_unit": "T",
       "rank": 4
     },
     {
       "model": "Claude Opus 4.7",
       "tokens": 390000000000,
+      "tokens_t": 0.39,
+      "tokens_unit": "T",
       "rank": 5
     },
     {
       "model": "Claude Opus 4.8",
       "tokens": 332000000000,
+      "tokens_t": 0.332,
+      "tokens_unit": "T",
       "rank": 6
     },
     {
       "model": "Claude Sonnet 4.6",
       "tokens": 171000000000,
+      "tokens_t": 0.171,
+      "tokens_unit": "T",
       "rank": 7
     }
   ]
