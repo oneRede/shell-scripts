@@ -1,0 +1,6 @@
+logs/*.log
+logs/*.csv
+data/*.csv
+*.tmp
+*.swp
+.DS_Store
