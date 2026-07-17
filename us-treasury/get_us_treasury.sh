@@ -3,13 +3,14 @@
 # 美国30年期国债收益率及国债总量获取脚本
 # 每4小时运行一次，记录当前收益率和国债总量
 
-# 设置日志目录
+# 设置目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_DIR="${SCRIPT_DIR}/logs"
+DATA_DIR="${SCRIPT_DIR}/data"
 LOG_FILE="${LOG_DIR}/us_treasury_$(date +%Y%m%d).log"
 
-# 创建日志目录
-mkdir -p "${LOG_DIR}"
+# 创建必要的目录
+mkdir -p "${LOG_DIR}" "${DATA_DIR}"
 
 # 获取当前时间戳
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
@@ -97,7 +98,7 @@ else
 fi
 
 # 同时保存到CSV格式的文件，便于后续分析
-CSV_FILE="${LOG_DIR}/us_treasury.csv"
+CSV_FILE="${DATA_DIR}/us_treasury.csv"
 if [ ! -f "${CSV_FILE}" ]; then
     echo "时间戳,收益率(%),国债总量(亿美元),数据源" > "${CSV_FILE}"
 fi

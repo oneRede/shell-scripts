@@ -7,9 +7,10 @@
 - `get_us_treasury.sh` - 主脚本，获取美国30年期国债收益率和国债总量
 - `install_autostart.sh` - 安装开机自启动
 - `uninstall_autostart.sh` - 卸载开机自启动
+- `data/` - 数据目录
+  - `us_treasury.csv` - CSV格式的历史数据
 - `logs/` - 日志目录
   - `us_treasury_YYYYMMDD.log` - 每日日志文件
-  - `us_treasury.csv` - CSV格式的历史数据
 
 ## 使用方法
 
