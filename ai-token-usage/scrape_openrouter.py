@@ -20,7 +20,8 @@ from selenium.webdriver.support import expected_conditions as EC
 # 配置
 SCRIPT_DIR = Path(__file__).parent
 LOG_DIR = SCRIPT_DIR / "logs"
-OPENROUTER_DIR = LOG_DIR / "openrouter"
+DATA_DIR = SCRIPT_DIR / "data"
+OPENROUTER_DIR = DATA_DIR / "openrouter"
 URL = "https://openrouter.ai/rankings?view=day"
 
 # 创建目录
@@ -172,7 +173,11 @@ def save_results(data):
     date_suffix = target_date.strftime("%Y%m%d")
     date_display = target_date.strftime("%Y年%m月%d日")
 
-    # 保存原始JSON
+    # 计算总token和月度估算
+    total_tokens = sum(r['tokens'] for r in rankings)
+    monthly_estimate = total_tokens * 30
+
+    # 保存原始JSON（包含月度估算）
     json_file = OPENROUTER_DIR / f"rankings_{date_suffix}.json"
     with open(json_file, 'w', encoding='utf-8') as f:
         json.dump({
@@ -181,6 +186,12 @@ def save_results(data):
             'source': 'OpenRouter Rankings (Day View)',
             'url': URL,
             'note': f'数据代表{date_display}的Token消耗',
+            'statistics': {
+                'total_tokens_per_day': total_tokens,
+                'monthly_estimate': monthly_estimate,
+                'monthly_estimate_trillion': round(monthly_estimate / 1_000_000_000_000, 2),
+                'model_count': len(rankings)
+            },
             'rankings': rankings
         }, f, indent=2, ensure_ascii=False)
 
@@ -252,7 +263,7 @@ def main():
     print("=" * 60)
     print("\n💡 故障排查:")
     print("  1. 检查ChromeDriver: brew install chromedriver")
-    print("  2. 查看HTML文件: logs/openrouter/page_*.html")
+    print("  2. 查看HTML文件: data/openrouter/page_*.html")
     print("  3. 网页结构可能已变化")
     return 1
 
@@ -473,7 +484,7 @@ def main():
         print("=" * 60)
         print("\n💡 故障排查:")
         print("  1. 检查ChromeDriver: brew install chromedriver")
-        print("  2. 查看HTML文件: logs/openrouter/page_*.html")
+        print("  2. 查看HTML文件: data/openrouter/page_*.html")
         print("  3. 网页结构可能已变化")
         return 1
 
