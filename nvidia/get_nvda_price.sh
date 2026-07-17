@@ -6,10 +6,11 @@
 # 设置日志目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_DIR="${SCRIPT_DIR}/logs"
+DATA_DIR="${SCRIPT_DIR}/data"
 LOG_FILE="${LOG_DIR}/nvda_price_$(date +%Y%m%d).log"
 
 # 创建日志目录
-mkdir -p "${LOG_DIR}"
+mkdir -p "${LOG_DIR}" "${DATA_DIR}"
 
 # 获取当前时间戳
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
@@ -147,7 +148,7 @@ fi
 echo "${TIMESTAMP} - NVDA 股价: \$${PRICE} ${CHANGE_STR} | 开:\$${OPEN} 高:\$${HIGH} 低:\$${LOW} 量:${VOLUME}${PE_INFO} [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
 
 # 同时保存到CSV格式的文件，便于后续分析
-CSV_FILE="${LOG_DIR}/nvda_price.csv"
+CSV_FILE="${DATA_DIR}/nvda_price.csv"
 if [ ! -f "${CSV_FILE}" ]; then
     echo "时间戳,价格(USD),开盘价,最高价,最低价,成交量,涨跌额,涨跌幅(%),动态市盈率,数据源" > "${CSV_FILE}"
 fi

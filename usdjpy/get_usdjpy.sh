@@ -6,10 +6,11 @@
 # 设置日志目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_DIR="${SCRIPT_DIR}/logs"
+DATA_DIR="${SCRIPT_DIR}/data"
 LOG_FILE="${LOG_DIR}/usdjpy_$(date +%Y%m%d).log"
 
 # 创建日志目录
-mkdir -p "${LOG_DIR}"
+mkdir -p "${LOG_DIR}" "${DATA_DIR}"
 
 # 获取当前时间戳
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
@@ -111,7 +112,7 @@ fi
 echo "${TIMESTAMP} - USD/JPY汇率: ¥${RATE} [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
 
 # 同时保存到CSV格式的文件，便于后续分析
-CSV_FILE="${LOG_DIR}/usdjpy.csv"
+CSV_FILE="${DATA_DIR}/usdjpy.csv"
 if [ ! -f "${CSV_FILE}" ]; then
     echo "时间戳,汇率(JPY),数据源" > "${CSV_FILE}"
 fi

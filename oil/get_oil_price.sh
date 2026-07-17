@@ -6,10 +6,11 @@
 # 设置日志目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_DIR="${SCRIPT_DIR}/logs"
+DATA_DIR="${SCRIPT_DIR}/data"
 LOG_FILE="${LOG_DIR}/oil_price_$(date +%Y%m%d).log"
 
 # 创建日志目录
-mkdir -p "${LOG_DIR}"
+mkdir -p "${LOG_DIR}" "${DATA_DIR}"
 
 # 获取当前时间戳
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")

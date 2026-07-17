@@ -7,10 +7,11 @@
 # 设置日志目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_DIR="${SCRIPT_DIR}/logs"
+DATA_DIR="${SCRIPT_DIR}/data"
 LOG_FILE="${LOG_DIR}/memory_price_$(date +%Y%m%d).log"
 
 # 创建日志目录
-mkdir -p "${LOG_DIR}"
+mkdir -p "${LOG_DIR}" "${DATA_DIR}"
 
 # 获取当前时间戳
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
@@ -122,7 +123,7 @@ echo "" >> "${LOG_FILE}"
 echo "========================================" >> "${LOG_FILE}"
 
 # 同时保存到CSV格式的文件，便于后续分析
-CSV_FILE="${LOG_DIR}/memory_price.csv"
+CSV_FILE="${DATA_DIR}/memory_price.csv"
 if [ ! -f "${CSV_FILE}" ]; then
     echo "时间戳,类别,产品,当前价(CNY),涨跌额(CNY),涨跌幅(%),前收盘价(CNY),高点(CNY),低点(CNY),汇率(USD/CNY)" > "${CSV_FILE}"
 fi
