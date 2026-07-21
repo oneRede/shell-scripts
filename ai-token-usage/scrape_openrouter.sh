@@ -26,14 +26,6 @@ if ! python3 -c "import selenium" 2>/dev/null; then
     pip3 install selenium
 fi
 
-# 检查ChromeDriver
-if ! command -v chromedriver &> /dev/null; then
-    echo "⚠️  未安装ChromeDriver"
-    echo "请运行: brew install chromedriver"
-    echo "或运行: ./install_openrouter_deps.sh"
-    exit 1
-fi
-
 # 运行Python脚本
 echo ""
 python3 "${PYTHON_SCRIPT}" 2>&1 | tee -a "${LOG_FILE}"

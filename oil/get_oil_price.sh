@@ -14,6 +14,16 @@ mkdir -p "${LOG_DIR}" "${DATA_DIR}"
 
 # 获取当前时间戳
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+RECORD_DATE=$(date "+%Y-%m-%d %H:%M:%S")
+
+# 数据文件路径
+MAIN_CSV="${DATA_DIR}/oil_price_data.csv"
+
+# 初始化CSV文件（如果不存在）
+if [ ! -f "${MAIN_CSV}" ]; then
+    echo "时间,价格(USD/桶),数据源" > "${MAIN_CSV}"
+    echo "${TIMESTAMP} - 初始化数据文件: ${MAIN_CSV}" | tee -a "${LOG_FILE}"
+fi
 
 # 方法1: 使用 TradingEconomics（原油价格）
 get_price_method1() {
@@ -70,5 +80,9 @@ fi
 
 # 记录价格
 echo "${TIMESTAMP} - 原油价格 (WTI): \$${PRICE}/桶 [来源: ${METHOD}]" | tee -a "${LOG_FILE}"
+
+# 写入CSV文件
+echo "${RECORD_DATE},${PRICE},${METHOD}" >> "${MAIN_CSV}"
+echo "${TIMESTAMP} - 数据已记录到: ${MAIN_CSV}" | tee -a "${LOG_FILE}"
 
 exit 0

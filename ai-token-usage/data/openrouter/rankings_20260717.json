@@ -1,0 +1,65 @@
+{
+  "crawl_time": "2026-07-18 10:00:19",
+  "target_date": "2026-07-17",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年07月17日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 2787000000000,
+    "monthly_estimate_tokens": 83610000000000,
+    "monthly_estimate_t": 83.61,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 7
+  },
+  "rankings": [
+    {
+      "model": "MiniMax M3",
+      "tokens": 568000000000,
+      "tokens_t": 0.568,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "DeepSeek V4 Pro",
+      "tokens": 448000000000,
+      "tokens_t": 0.448,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "GLM 5.2",
+      "tokens": 430000000000,
+      "tokens_t": 0.43,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "Nemotron 3 Ultra (free)",
+      "tokens": 426000000000,
+      "tokens_t": 0.426,
+      "tokens_unit": "T",
+      "rank": 4
+    },
+    {
+      "model": "Claude Opus 4.7",
+      "tokens": 370000000000,
+      "tokens_t": 0.37,
+      "tokens_unit": "T",
+      "rank": 5
+    },
+    {
+      "model": "Claude Opus 4.8",
+      "tokens": 323000000000,
+      "tokens_t": 0.323,
+      "tokens_unit": "T",
+      "rank": 6
+    },
+    {
+      "model": "Claude Sonnet 5",
+      "tokens": 222000000000,
+      "tokens_t": 0.222,
+      "tokens_unit": "T",
+      "rank": 7
+    }
+  ]
+}
