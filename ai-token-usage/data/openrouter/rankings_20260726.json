@@ -1,0 +1,65 @@
+{
+  "crawl_time": "2026-07-27 08:40:46",
+  "target_date": "2026-07-26",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年07月26日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 1996000000000,
+    "monthly_estimate_tokens": 59880000000000,
+    "monthly_estimate_t": 59.88,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 7
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4 Pro",
+      "tokens": 493000000000,
+      "tokens_t": 0.493,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "Nemotron 3 Ultra (free)",
+      "tokens": 405000000000,
+      "tokens_t": 0.405,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "GLM 5.2",
+      "tokens": 332000000000,
+      "tokens_t": 0.332,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "MiniMax M3",
+      "tokens": 257000000000,
+      "tokens_t": 0.257,
+      "tokens_unit": "T",
+      "rank": 4
+    },
+    {
+      "model": "Step 3.7 Flash",
+      "tokens": 193000000000,
+      "tokens_t": 0.193,
+      "tokens_unit": "T",
+      "rank": 5
+    },
+    {
+      "model": "Kimi K3",
+      "tokens": 165000000000,
+      "tokens_t": 0.165,
+      "tokens_unit": "T",
+      "rank": 6
+    },
+    {
+      "model": "Ling-3.0-flash (free)",
+      "tokens": 151000000000,
+      "tokens_t": 0.151,
+      "tokens_unit": "T",
+      "rank": 7
+    }
+  ]
+}
