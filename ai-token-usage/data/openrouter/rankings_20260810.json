@@ -1,0 +1,65 @@
+{
+  "crawl_time": "2026-08-11 10:00:12",
+  "target_date": "2026-08-10",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年08月10日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 3160000000000,
+    "monthly_estimate_tokens": 94800000000000,
+    "monthly_estimate_t": 94.8,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 7
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4 Flash 0423",
+      "tokens": 787000000000,
+      "tokens_t": 0.787,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "MiMo-V2.5",
+      "tokens": 657000000000,
+      "tokens_t": 0.657,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "GLM 5.2",
+      "tokens": 559000000000,
+      "tokens_t": 0.559,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "DeepSeek V4 Pro",
+      "tokens": 398000000000,
+      "tokens_t": 0.398,
+      "tokens_unit": "T",
+      "rank": 4
+    },
+    {
+      "model": "Nemotron 3 Ultra (free)",
+      "tokens": 271000000000,
+      "tokens_t": 0.271,
+      "tokens_unit": "T",
+      "rank": 5
+    },
+    {
+      "model": "Laguna S 2.1 (free)",
+      "tokens": 251000000000,
+      "tokens_t": 0.251,
+      "tokens_unit": "T",
+      "rank": 6
+    },
+    {
+      "model": "MiniMax M3",
+      "tokens": 237000000000,
+      "tokens_t": 0.237,
+      "tokens_unit": "T",
+      "rank": 7
+    }
+  ]
+}

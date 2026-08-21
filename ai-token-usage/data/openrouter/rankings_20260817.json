@@ -1,0 +1,51 @@
+{
+  "crawl_time": "2026-08-18 18:11:40",
+  "target_date": "2026-08-17",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年08月17日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 2277000000000,
+    "monthly_estimate_tokens": 68310000000000,
+    "monthly_estimate_t": 68.31,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 5
+  },
+  "rankings": [
+    {
+      "model": "GLM 5.2",
+      "tokens": 638000000000,
+      "tokens_t": 0.638,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "Gemini 3.6 Flash",
+      "tokens": 543000000000,
+      "tokens_t": 0.543,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "Nemotron 3 Ultra (free)",
+      "tokens": 517000000000,
+      "tokens_t": 0.517,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "DeepSeek V4 Pro 0423",
+      "tokens": 319000000000,
+      "tokens_t": 0.319,
+      "tokens_unit": "T",
+      "rank": 4
+    },
+    {
+      "model": "Claude Opus 5",
+      "tokens": 260000000000,
+      "tokens_t": 0.26,
+      "tokens_unit": "T",
+      "rank": 5
+    }
+  ]
+}

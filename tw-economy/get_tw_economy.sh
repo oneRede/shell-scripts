@@ -80,6 +80,72 @@ get_gdp_growth() {
     fi
 }
 
+# 自动从tradingeconomics获取最新进出口数据
+get_trade_auto() {
+    local temp_exports="/tmp/tw_exports_$$.html"
+    local temp_imports="/tmp/tw_imports_$$.html"
+
+    curl -s -A "Mozilla/5.0" "https://zh.tradingeconomics.com/taiwan/exports" > "$temp_exports"
+    curl -s -A "Mozilla/5.0" "https://zh.tradingeconomics.com/taiwan/imports" > "$temp_imports"
+
+    python3 << PYEOF
+import re
+from datetime import datetime, timedelta
+
+try:
+    # 读取出口数据
+    with open('$temp_exports', 'r', encoding='utf-8', errors='ignore') as f:
+        exports_content = f.read()
+
+    # 读取进口数据
+    with open('$temp_imports', 'r', encoding='utf-8', errors='ignore') as f:
+        imports_content = f.read()
+
+    # 提取数据 - 查找连续出现的数字（百万美元）
+    exports_pattern = r'(\d{5,6})\s*百万美元'
+    imports_pattern = r'(\d{5,6})\s*百万美元'
+
+    exports_matches = re.findall(exports_pattern, exports_content)
+    imports_matches = re.findall(imports_pattern, imports_content)
+
+    if exports_matches and imports_matches:
+        # 取第二个值（通常是最新值）
+        exports_million = exports_matches[1] if len(exports_matches) > 1 else exports_matches[0]
+        imports_million = imports_matches[1] if len(imports_matches) > 1 else imports_matches[0]
+
+        # 转换为亿美元
+        exports_yi = float(exports_million) / 100
+        imports_yi = float(imports_million) / 100
+
+        # 获取上个月的年月
+        last_month = (datetime.now() - timedelta(days=datetime.now().day + 1)).strftime('%Y-%m')
+
+        print(f"EXPORTS:{exports_yi:.2f},{last_month}")
+        print(f"IMPORTS:{imports_yi:.2f},{last_month}")
+except Exception as e:
+    import sys
+    print(f"ERROR: {e}", file=sys.stderr)
+PYEOF
+
+    rm -f "$temp_exports" "$temp_imports"
+}
+
+# 获取并缓存进出口数据
+update_trade_cache() {
+    local trade_data=$(get_trade_auto)
+
+    if [ -n "$trade_data" ]; then
+        # 解析并更新缓存
+        echo "$trade_data" | while read line; do
+            if [[ "$line" =~ ^EXPORTS:(.+)$ ]]; then
+                echo "${BASH_REMATCH[1]}" > "${DATA_DIR}/.exports_cache"
+            elif [[ "$line" =~ ^IMPORTS:(.+)$ ]]; then
+                echo "${BASH_REMATCH[1]}" > "${DATA_DIR}/.imports_cache"
+            fi
+        done
+    fi
+}
+
 # 获取出口额（从缓存）
 get_exports() {
     local cache_file="${DATA_DIR}/.exports_cache"
@@ -104,6 +170,10 @@ get_imports() {
 echo "${TIMESTAMP} - ========== 开始收集台湾经济数据 ==========" | tee -a "${LOG_FILE}"
 
 init_csv
+
+# 自动更新进出口数据缓存
+echo "${TIMESTAMP} - 开始自动获取进出口数据..." | tee -a "${LOG_FILE}"
+update_trade_cache
 
 # 获取GDP数据
 echo "${TIMESTAMP} - 开始自动获取GDP增长率..." | tee -a "${LOG_FILE}"
