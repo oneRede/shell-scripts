@@ -1,0 +1,44 @@
+{
+  "crawl_time": "2026-08-28 10:00:14",
+  "target_date": "2026-08-27",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年08月27日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 2177000000000,
+    "monthly_estimate_tokens": 65310000000000,
+    "monthly_estimate_t": 65.31,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 4
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4 Flash 0423",
+      "tokens": 785000000000,
+      "tokens_t": 0.785,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "Gemini 3.7 Flash",
+      "tokens": 613000000000,
+      "tokens_t": 0.613,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "GLM 5.2",
+      "tokens": 425000000000,
+      "tokens_t": 0.425,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "GPT-5.6 Sol",
+      "tokens": 354000000000,
+      "tokens_t": 0.354,
+      "tokens_unit": "T",
+      "rank": 4
+    }
+  ]
+}
