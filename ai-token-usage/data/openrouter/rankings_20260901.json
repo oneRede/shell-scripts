@@ -1,0 +1,51 @@
+{
+  "crawl_time": "2026-09-02 10:00:10",
+  "target_date": "2026-09-01",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年09月01日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 2757000000000,
+    "monthly_estimate_tokens": 82710000000000,
+    "monthly_estimate_t": 82.71,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 5
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4 Flash 0423",
+      "tokens": 792000000000,
+      "tokens_t": 0.792,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "tencent",
+      "tokens": 515000000000,
+      "tokens_t": 0.515,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "MiMo-V2.5",
+      "tokens": 513000000000,
+      "tokens_t": 0.513,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "Nemotron 3 Ultra (free)",
+      "tokens": 493000000000,
+      "tokens_t": 0.493,
+      "tokens_unit": "T",
+      "rank": 4
+    },
+    {
+      "model": "Gemini 3.7 Flash",
+      "tokens": 444000000000,
+      "tokens_t": 0.444,
+      "tokens_unit": "T",
+      "rank": 5
+    }
+  ]
+}
