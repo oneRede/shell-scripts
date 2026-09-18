@@ -1,0 +1,44 @@
+{
+  "crawl_time": "2026-09-18 10:00:22",
+  "target_date": "2026-09-17",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年09月17日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 3097000000000,
+    "monthly_estimate_tokens": 92910000000000,
+    "monthly_estimate_t": 92.91,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 4
+  },
+  "rankings": [
+    {
+      "model": "Union Alpha",
+      "tokens": 841000000000,
+      "tokens_t": 0.841,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "GPT-6 Astra",
+      "tokens": 830000000000,
+      "tokens_t": 0.83,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "tencent",
+      "tokens": 766000000000,
+      "tokens_t": 0.766,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "Nemotron 3 Ultra (free)",
+      "tokens": 660000000000,
+      "tokens_t": 0.66,
+      "tokens_unit": "T",
+      "rank": 4
+    }
+  ]
+}
