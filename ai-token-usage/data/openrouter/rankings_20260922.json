@@ -1,0 +1,44 @@
+{
+  "crawl_time": "2026-09-23 10:00:10",
+  "target_date": "2026-09-22",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年09月22日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 2093000000000,
+    "monthly_estimate_tokens": 62790000000000,
+    "monthly_estimate_t": 62.79,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 4
+  },
+  "rankings": [
+    {
+      "model": "MiMo-V2.5",
+      "tokens": 695000000000,
+      "tokens_t": 0.695,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "DeepSeek V4 Flash 0423",
+      "tokens": 524000000000,
+      "tokens_t": 0.524,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "tencent",
+      "tokens": 483000000000,
+      "tokens_t": 0.483,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "Gemini 3.8 Flash",
+      "tokens": 391000000000,
+      "tokens_t": 0.391,
+      "tokens_unit": "T",
+      "rank": 4
+    }
+  ]
+}
