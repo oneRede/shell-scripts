@@ -1,0 +1,44 @@
+{
+  "crawl_time": "2026-09-24 10:00:11",
+  "target_date": "2026-09-23",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年09月23日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 1905000000000,
+    "monthly_estimate_tokens": 57150000000000,
+    "monthly_estimate_t": 57.15,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 4
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4 Flash 0423",
+      "tokens": 515000000000,
+      "tokens_t": 0.515,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "Nemotron 3 Ultra (free)",
+      "tokens": 483000000000,
+      "tokens_t": 0.483,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "tencent",
+      "tokens": 456000000000,
+      "tokens_t": 0.456,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "GLM 5.3",
+      "tokens": 451000000000,
+      "tokens_t": 0.451,
+      "tokens_unit": "T",
+      "rank": 4
+    }
+  ]
+}
