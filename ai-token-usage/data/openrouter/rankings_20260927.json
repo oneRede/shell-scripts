@@ -1,0 +1,37 @@
+{
+  "crawl_time": "2026-09-28 10:00:11",
+  "target_date": "2026-09-27",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年09月27日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 1834000000000,
+    "monthly_estimate_tokens": 55020000000000,
+    "monthly_estimate_t": 55.02,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 3
+  },
+  "rankings": [
+    {
+      "model": "Space Bunny Alpha",
+      "tokens": 841000000000,
+      "tokens_t": 0.841,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "GPT-6 Luna",
+      "tokens": 591000000000,
+      "tokens_t": 0.591,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "DeepSeek V4 Flash 0423",
+      "tokens": 402000000000,
+      "tokens_t": 0.402,
+      "tokens_unit": "T",
+      "rank": 3
+    }
+  ]
+}
