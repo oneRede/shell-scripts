@@ -1,0 +1,51 @@
+{
+  "crawl_time": "2026-10-08 08:44:47",
+  "target_date": "2026-10-07",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年10月07日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 3538000000000,
+    "monthly_estimate_tokens": 106140000000000,
+    "monthly_estimate_t": 106.14,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 5
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4.1 Flash",
+      "tokens": 957000000000,
+      "tokens_t": 0.957,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "Claude Opus 5.5",
+      "tokens": 883000000000,
+      "tokens_t": 0.883,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "DeepSeek V4 Flash 0731",
+      "tokens": 714000000000,
+      "tokens_t": 0.714,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "GLM 5.3",
+      "tokens": 495000000000,
+      "tokens_t": 0.495,
+      "tokens_unit": "T",
+      "rank": 4
+    },
+    {
+      "model": "Jev 1.13",
+      "tokens": 489000000000,
+      "tokens_t": 0.489,
+      "tokens_unit": "T",
+      "rank": 5
+    }
+  ]
+}
