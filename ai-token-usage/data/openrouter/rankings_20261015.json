@@ -1,0 +1,44 @@
+{
+  "crawl_time": "2026-10-16 10:00:18",
+  "target_date": "2026-10-15",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年10月15日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 3417000000000,
+    "monthly_estimate_tokens": 102510000000000,
+    "monthly_estimate_t": 102.51,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 4
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4.1 Flash",
+      "tokens": 981000000000,
+      "tokens_t": 0.981,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "GPT-6 Luna",
+      "tokens": 969000000000,
+      "tokens_t": 0.969,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "Nemotron 3 Ultra (free)",
+      "tokens": 776000000000,
+      "tokens_t": 0.776,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "DeepSeek V4 Flash 0731",
+      "tokens": 691000000000,
+      "tokens_t": 0.691,
+      "tokens_unit": "T",
+      "rank": 4
+    }
+  ]
+}
