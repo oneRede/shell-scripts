@@ -1,0 +1,37 @@
+{
+  "crawl_time": "2026-11-03 10:00:16",
+  "target_date": "2026-11-02",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年11月02日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 2604000000000,
+    "monthly_estimate_tokens": 78120000000000,
+    "monthly_estimate_t": 78.12,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 3
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4.1 Flash 1017",
+      "tokens": 978000000000,
+      "tokens_t": 0.978,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "MiniMax M3.1 Flash",
+      "tokens": 906000000000,
+      "tokens_t": 0.906,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "Kimi K3.1 Pro",
+      "tokens": 720000000000,
+      "tokens_t": 0.72,
+      "tokens_unit": "T",
+      "rank": 3
+    }
+  ]
+}
