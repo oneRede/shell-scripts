@@ -1,0 +1,58 @@
+{
+  "crawl_time": "2026-11-09 10:00:11",
+  "target_date": "2026-11-08",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年11月08日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 4697000000000,
+    "monthly_estimate_tokens": 140910000000000,
+    "monthly_estimate_t": 140.91,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 6
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4.1 Flash 1017",
+      "tokens": 959000000000,
+      "tokens_t": 0.959,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "Crouton Alpha",
+      "tokens": 936000000000,
+      "tokens_t": 0.936,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "Kimi K3.1 Pro",
+      "tokens": 826000000000,
+      "tokens_t": 0.826,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "GPT-6 Luna",
+      "tokens": 750000000000,
+      "tokens_t": 0.75,
+      "tokens_unit": "T",
+      "rank": 4
+    },
+    {
+      "model": "Claude Opus 5.5",
+      "tokens": 688000000000,
+      "tokens_t": 0.688,
+      "tokens_unit": "T",
+      "rank": 5
+    },
+    {
+      "model": "MiniMax M3.1 Flash",
+      "tokens": 538000000000,
+      "tokens_t": 0.538,
+      "tokens_unit": "T",
+      "rank": 6
+    }
+  ]
+}
