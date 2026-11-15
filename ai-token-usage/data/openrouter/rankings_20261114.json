@@ -1,0 +1,58 @@
+{
+  "crawl_time": "2026-11-15 10:00:12",
+  "target_date": "2026-11-14",
+  "source": "OpenRouter Rankings (Day View)",
+  "url": "https://openrouter.ai/rankings?view=day",
+  "note": "数据代表2026年11月14日的Token消耗",
+  "statistics": {
+    "total_tokens_per_day": 4244000000000,
+    "monthly_estimate_tokens": 127320000000000,
+    "monthly_estimate_t": 127.32,
+    "monthly_estimate_unit": "T tokens",
+    "model_count": 6
+  },
+  "rankings": [
+    {
+      "model": "DeepSeek V4.1 Flash 1017",
+      "tokens": 999000000000,
+      "tokens_t": 0.999,
+      "tokens_unit": "T",
+      "rank": 1
+    },
+    {
+      "model": "Step 5 Preview",
+      "tokens": 959000000000,
+      "tokens_t": 0.959,
+      "tokens_unit": "T",
+      "rank": 2
+    },
+    {
+      "model": "Claude Opus 5.5",
+      "tokens": 754000000000,
+      "tokens_t": 0.754,
+      "tokens_unit": "T",
+      "rank": 3
+    },
+    {
+      "model": "MiniMax M3.1 Flash",
+      "tokens": 535000000000,
+      "tokens_t": 0.535,
+      "tokens_unit": "T",
+      "rank": 4
+    },
+    {
+      "model": "MiMo-V2.6-Flash",
+      "tokens": 501000000000,
+      "tokens_t": 0.501,
+      "tokens_unit": "T",
+      "rank": 5
+    },
+    {
+      "model": "ERNIE-5.5-Flash-Preview (free)",
+      "tokens": 496000000000,
+      "tokens_t": 0.496,
+      "tokens_unit": "T",
+      "rank": 6
+    }
+  ]
+}
